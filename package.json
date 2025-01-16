@@ -1,0 +1,45 @@
+{
+    "name": "dapp",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "@types/react": "^19.0.2",
+        "buffer": "^6.0.3",
+        "cors": "^2.8.5",
+        "express": "^4.21.2",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "react-router-dom": "^7.1.1",
+        "vite": "^6.0.7"
+    },
+    "scripts": {
+        "start": "vite console",
+        "build": "vite build --mode production",
+        "preview": "vite preview",
+        "server": "node server/app.js"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app",
+            "react-app/jest"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "devDependencies": {
+        "@types/react-dom": "^19.0.2",
+        "@vitejs/plugin-react": "^4.3.4",
+        "sass": "^1.83.4",
+        "vite-plugin-compression": "^0.5.1"
+    }
+}
