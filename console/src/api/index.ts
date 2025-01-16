@@ -71,7 +71,8 @@ export const ERROR_STATUS: { [key: number]: string } = {
  */
 export class APIClient {
     protected readonly http: HttpClient = new HttpClient();
-    protected readonly ROOT_PATH = `http://localhost:3003`;
+    protected readonly ROOT_PATH = `${import.meta.env.VITE_API_URL}`;
+
     public get token() {
         return getSessionStorageItem(StorageKeys.TOKEN) || '';
     };

@@ -33,8 +33,13 @@ export function Modal({ onClose }: ModalProps) {
             const token = await authClient.login({
                 address: provider.PUBLIC_KEY ?? '',
                 signature,
-                message: "TEST MESSAGE",
+                message: import.meta.env.VITE_MESSAGE,
             });
+
+            if (!token) {
+                throw new Error();
+            }
+
             setSessionStorageItem(StorageKeys.TOKEN, token);
             setIsLoggedIn(true);
         } catch (error) {

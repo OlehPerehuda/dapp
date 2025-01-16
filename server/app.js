@@ -3,9 +3,10 @@ const express = require('express');
 const jwt = require("jsonwebtoken");
 const nacl = require('tweetnacl');
 const { PublicKey } = require('@solana/web3.js');
+require('dotenv').config();
 
-const SECRET_KEY = 'SECRET_KEY';
-const PORT = process.env.PORT || 3003;
+const PORT = process.env.PORT;
+const SECRET_KEY = process.env.SECRET_KEY;
 
 const blacklistedTokens = new Set();
 

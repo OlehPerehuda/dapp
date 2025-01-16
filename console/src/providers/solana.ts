@@ -26,8 +26,7 @@ export class SolanaProvider {
 
     public async signMessage(providerType: ProviderType): Promise<string> {
         const provider = this.provider(providerType);
-        console.log('provider: ', provider);
-        const message = new TextEncoder().encode('TEST MESSAGE');
+        const message = new TextEncoder().encode(import.meta.env.VITE_MESSAGE);
         const { signature } = await provider.signMessage(message, 'utf8');
 
         return Buffer.from(signature).toString('base64');
