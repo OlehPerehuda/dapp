@@ -97,8 +97,6 @@ export class HttpClient {
             'Content-Type': 'application/json',
         };
 
-        console.log('token: ', token);
-
         if (token) {
             request.headers = {
                 ...request.headers,
