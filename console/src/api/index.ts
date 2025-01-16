@@ -1,4 +1,5 @@
 import { HttpClient } from "@/api/http/client";
+import { StorageKeys, getSessionStorageItem } from "@/app/utils/storage";
 
 /*
 **
@@ -6,7 +7,7 @@ import { HttpClient } from "@/api/http/client";
  * completed because it lacks valid authentication credentials for the requested resource.
  */
 export class UnauthorizedError extends Error {
-    /** Error message while unauthorized */
+    /** Error message while unauthorized. */
     public constructor(message = 'Unauthorized') {
         super(message);
     }
@@ -71,6 +72,9 @@ export const ERROR_STATUS: { [key: number]: string } = {
 export class APIClient {
     protected readonly http: HttpClient = new HttpClient();
     protected readonly ROOT_PATH = `http://localhost:3003`;
+    public get token() {
+        return getSessionStorageItem(StorageKeys.TOKEN) || '';
+    };
 
     /**
          * handles error due to response code.
@@ -87,7 +91,6 @@ export class APIClient {
          *
          * @private
          */
-    /* eslint-disable */
     protected async handleError(response: Response): Promise<void> {
         const error = await response.json();
         const message = error.error;

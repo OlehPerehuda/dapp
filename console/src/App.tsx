@@ -1,35 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { Header } from "@/app/components/common/Header";
+import { AppContext } from "@/app/context/app";
 
-import { Client } from "@/api/client";
-import { SolanaProvider } from "@/providers/solana";
-
-import { Button } from "@/app/components/common/Button";
-import { Modal } from "@/app/components/common/Modal";
-
-import "./App.css";
+import "./App.scss";
 
 function App() {
-    const client = useMemo(() => new Client(), []);
-    const [isModalShown, setIsModalShown] = useState<Boolean>(false);
-
-    const toggleModalVisibility = () => setIsModalShown(!isModalShown);
-
-    useEffect(() => {
-        (async () => {
-            await client.profile();
-        })();
-    }, []);
-
     return (
-        <>
-            <h1>
-                Hello world
-            </h1>
-            <Button label="Connect" onClick={toggleModalVisibility} />
-            {
-                isModalShown && <Modal onClose={toggleModalVisibility} />
-            }
-        </>
+        <AppContext>
+            <Header />
+        </AppContext>
     );
 };
 

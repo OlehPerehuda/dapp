@@ -1,10 +1,13 @@
-import { JSX, useMemo, useRef } from "react";
+import { JSX, useContext, useMemo, useRef } from "react";
 
 import { SolanaProvider } from "@/providers/solana";
+import { AuthClient } from "@/api/auth";
+import { StorageKeys, setSessionStorageItem } from "@/app/utils/storage";
+import { AppState } from "@/app/context/app";
 
-import { PhatomWalletIcon } from '@/app/static/icons/phantomWallet';
-import { SolfareWalletIcon } from '@/app/static/icons/solfareWallet';
-import { CloseIcon } from '@/app/static/icons/close';
+import { PhatomWalletIcon } from "@/app/static/icons/phantomWallet";
+import { SolfareWalletIcon } from "@/app/static/icons/solfareWallet";
+import { CloseIcon } from "@/app/static/icons/close";
 // import { NotificationsPlugin } from '@/app/utils/notifications';
 // import messages from '@/app/configs/messages.json';
 
@@ -28,7 +31,9 @@ type ModalProps = {
 };
 
 export function Modal({ onClose }: ModalProps) {
+    const { setIsLoggedIn } = useContext(AppState);
     const provider = useMemo(() => new SolanaProvider(), []);
+    const authClient = useMemo(() => new AuthClient(), []);
 
     const selectWalletModalRef = useRef<HTMLDivElement | null>(null);
     // @ts-ignore
@@ -54,12 +59,18 @@ export function Modal({ onClose }: ModalProps) {
             await provider.connect();
             onClose();
             const signature = await provider.signMessage();
+            const token = await authClient.login({
+                address: provider.PUBLIC_KEY as string,
+                signature,
+                message: "TEST MESSAGE",
+            });
+            setSessionStorageItem(StorageKeys.TOKEN, token);
+            setIsLoggedIn(true);
         } catch (error) {
             console.log('error: ', error);
         }
     };
 
-    // TODO: detect if EVM wallet installed.
     return (
         <>
             <div className="modal-wrapper"></div>

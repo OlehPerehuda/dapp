@@ -11,8 +11,9 @@ export class HttpClient {
     public async post(
         path: string,
         body?: string | FormData,
+        token?: string,
     ): Promise<Response> {
-        return await this.do('POST', path, body);
+        return await this.do('POST', path, body, token);
     }
 
     /**
@@ -23,8 +24,9 @@ export class HttpClient {
     public async patch(
         path: string,
         body?: string,
+        token?: string,
     ): Promise<Response> {
-        return await this.do('PATCH', path, body);
+        return await this.do('PATCH', path, body, token);
     }
 
     /**
@@ -35,8 +37,9 @@ export class HttpClient {
     public async put(
         path: string,
         body?: string | FormData,
+        token?: string,
     ): Promise<Response> {
-        return await this.do('PUT', path, body);
+        return await this.do('PUT', path, body, token);
     }
 
     /**
@@ -47,8 +50,9 @@ export class HttpClient {
     public async get(
         path: string,
         body?: string,
+        token?: string,
     ): Promise<Response> {
-        return await this.do('GET', path, body);
+        return await this.do('GET', path, body, token);
     }
 
     /**
@@ -60,8 +64,9 @@ export class HttpClient {
     public async delete(
         path: string,
         body?: string,
+        token?: string,
     ): Promise<Response> {
-        return await this.do('DELETE', path, body);
+        return await this.do('DELETE', path, body, token);
     }
 
     /**
@@ -74,6 +79,7 @@ export class HttpClient {
         method: string,
         path: string,
         body?: string | FormData,
+        token?: string,
     ): Promise<Response> {
         const request: RequestInit = {
             method,
@@ -83,13 +89,21 @@ export class HttpClient {
             request.body = body;
         };
 
-        /** 'Content-Type': 'multipart/form-data' doesn't set to headers.
+        /**
          * The browser automaticaly able to set the Content-Type header with the boundary expression
          * it will use to delimit form fields in the request body.
          * */
         request.headers = {
-            'Accept': "application/vnd.api+json",
-            'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+            'Content-Type': 'application/json',
+        };
+
+        console.log('token: ', token);
+
+        if (token) {
+            request.headers = {
+                ...request.headers,
+                'Authorization': `Bearer ${token}`,
+            }
         };
 
         return await fetch(path, request);
