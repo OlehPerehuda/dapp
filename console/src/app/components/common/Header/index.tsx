@@ -3,6 +3,8 @@ import { useContext, useMemo, useState } from "react";
 import { AuthClient } from "@/api/auth";
 import { StorageKeys, removeSessionStorageItem } from "@/app/utils/storage";
 import { AppState } from "@/app/context/app";
+import { NotificationsPlugin } from "@/app/utils/notifications";
+import messages from '@/app/configs/messages.json';
 
 import { Button } from "@/app/components/common/Button";
 import { Modal } from "@/app/components/common/Modal";
@@ -13,7 +15,7 @@ import './index.scss';
 export function Header() {
     const { isLoggedIn, setIsLoggedIn } = useContext(AppState);
     const authClient = useMemo(() => new AuthClient(), []);
-    const [isModalShown, setIsModalShown] = useState<Boolean>(false);
+    const [isModalShown, setIsModalShown] = useState<boolean>(false);
 
     const toggleModalVisibility = () => setIsModalShown(!isModalShown);
 
@@ -23,7 +25,7 @@ export function Header() {
             removeSessionStorageItem(StorageKeys.TOKEN);
             setIsLoggedIn(false);
         } catch (error) {
-            console.log('error: ', error);
+            NotificationsPlugin.error(messages.auth.logout.error);
         }
     };
 

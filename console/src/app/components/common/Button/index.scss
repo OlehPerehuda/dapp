@@ -9,9 +9,11 @@
     outline: none;
     border: none;
     cursor: pointer;
+    background: var(--white-100);
 
     &__label {
         font-family: "Gabarito", sans-serif;
         text-transform: uppercase;
+        color: var(--black-100);
     }
 }

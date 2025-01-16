@@ -1,8 +1,13 @@
 .wallet-address {
     display: flex;
     gap: 0.5rem;
+    align-items: center;
 
     &__label {
         font-family: "Gabarito", sans-serif;
+    }
+
+    &__copy {
+        cursor: copy;
     }
 }

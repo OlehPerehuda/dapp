@@ -3,10 +3,10 @@ export enum StorageKeys {
 };
 
 export const setSessionStorageItem = (item: string, value: string) =>
-    window?.sessionStorage.setItem(item, value);
+    window.sessionStorage.setItem(item, value);
 
 export const getSessionStorageItem = (item: string) =>
-    window?.sessionStorage.getItem(item);
+    window.sessionStorage.getItem(item);
 
 export const removeSessionStorageItem = (item: string) =>
-    window?.sessionStorage.removeItem(item);
+    window.sessionStorage.removeItem(item);

@@ -1,0 +1,16 @@
+{
+    "auth": {
+        "login": {
+            "error": "Could not login. Please try again later!"
+        },
+        "logout": {
+            "error": "Could not logout. Please try again later!"
+        }
+    },
+    "profile": {
+        "error": "Could not get profile. Please try again later!"
+    },
+    "walletAddress": {
+        "copied": "Wallet address successfully copied!"
+    }
+}

@@ -2,8 +2,8 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    background-color: black;
+    background: var(--black-200);
     padding: 0.5rem 1rem;
     gap: 1rem;
-    color: white;
+    color: var(--white-100);
 }

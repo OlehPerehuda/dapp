@@ -1,30 +1,16 @@
-import { JSX, useContext, useMemo, useRef } from "react";
+import { useContext, useMemo, useRef } from "react";
 
 import { SolanaProvider } from "@/providers/solana";
 import { AuthClient } from "@/api/auth";
 import { StorageKeys, setSessionStorageItem } from "@/app/utils/storage";
 import { AppState } from "@/app/context/app";
+import { WALLETS_CONFIG, Wallets } from "@/app/utils/wallets";
+import { NotificationsPlugin } from "@/app/utils/notifications";
+import messages from '@/app/configs/messages.json';
 
-import { PhatomWalletIcon } from "@/app/static/icons/phantomWallet";
-import { SolfareWalletIcon } from "@/app/static/icons/solfareWallet";
 import { CloseIcon } from "@/app/static/icons/close";
-// import { NotificationsPlugin } from '@/app/utils/notifications';
-// import messages from '@/app/configs/messages.json';
 
 import './index.scss';
-
-type WalletConfigItem = {
-    name: string;
-    icon: JSX.Element;
-    label: string;
-};
-
-type Wallets = "phantom" | "solflare";
-
-export const walletIconsConfig: { [key in Wallets]: JSX.Element } = {
-    "phantom": <PhatomWalletIcon />,
-    "solflare": <SolfareWalletIcon />,
-};
 
 type ModalProps = {
     onClose: () => void;
@@ -36,37 +22,24 @@ export function Modal({ onClose }: ModalProps) {
     const authClient = useMemo(() => new AuthClient(), []);
 
     const selectWalletModalRef = useRef<HTMLDivElement | null>(null);
-    // @ts-ignore
-    const isPhantomWalletInstalled = Boolean(window.solana && window.solana?.isPhantom);
-    // @ts-ignore
-    const isSolflareWalletInstalled = Boolean(window.solflare && window.solflare.isSolflare);
 
-    const WALLETS_CONFIG: WalletConfigItem[] = [
-        {
-            name: 'Phantom wallet',
-            icon: walletIconsConfig['phantom'],
-            label: isPhantomWalletInstalled ? 'installed' : 'not installed',
-        },
-        {
-            name: 'Solflare',
-            icon: walletIconsConfig['solflare'],
-            label: isSolflareWalletInstalled ? 'installed' : 'not installed',
-        },
-    ];
+    const onLogin = async (name: Wallets) => {
+        const providerType = name === 'solflare' ? 'solflare' : 'solana';
 
-    const onLogin = async () => {
         try {
-            await provider.connect();
+            await provider.connect(providerType);
             onClose();
-            const signature = await provider.signMessage();
+            const signature = await provider.signMessage(providerType);
             const token = await authClient.login({
-                address: provider.PUBLIC_KEY as string,
+                address: provider.PUBLIC_KEY ?? '',
                 signature,
                 message: "TEST MESSAGE",
             });
             setSessionStorageItem(StorageKeys.TOKEN, token);
             setIsLoggedIn(true);
         } catch (error) {
+            NotificationsPlugin.error(messages.auth.login.error);
+            onClose();
             console.log('error: ', error);
         }
     };
@@ -85,8 +58,8 @@ export function Modal({ onClose }: ModalProps) {
                     {
                         WALLETS_CONFIG.map(item =>
                             <div
-                                key={item.name}
-                                onClick={onLogin}
+                                key={item.type}
+                                onClick={() => onLogin(item.type)}
                                 className="modal__list__item"
                             >
                                 <div className="modal__list__item__icon">
