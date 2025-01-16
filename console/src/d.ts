@@ -16,4 +16,4 @@ declare global {
             signMessage: (messsage: Uint8Array, format: string) => Promise<{ signature: Uint8Array }>;
         };
     }
-}
+};
