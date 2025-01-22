@@ -50,21 +50,25 @@ export class InternalError extends Error {
     public constructor(message = 'internal server error') {
         super(message);
     }
+};
+
+/**
+ * InternalError is a custom error type which indicates that to many requests provided.
+ */
+export class TooManyRequestsError extends Error {
+    /** Error message for too many reqeuests error */
+    public constructor(message = 'too many requests') {
+        super(message);
+    }
 }
+
 
 export const BAD_REQUEST_ERROR = 400;
 export const UNAUTHORISED_ERROR = 401;
 export const FORBIDDEN_ERROR = 403;
 export const NOT_FOUND_ERROR = 404;
+export const TOO_MANY_REQUESTS_ERROR = 429;
 export const INTERNAL_ERROR = 500;
-
-export const ERROR_STATUS: { [key: number]: string } = {
-    [BAD_REQUEST_ERROR]: 'bad request',
-    [UNAUTHORISED_ERROR]: 'unauthorized',
-    [FORBIDDEN_ERROR]: 'not allowed',
-    [NOT_FOUND_ERROR]: 'not found',
-    [INTERNAL_ERROR]: 'internal server error',
-};
 
 /**
  * APIClient is base client that holds http client and error handler.
@@ -93,21 +97,22 @@ export class APIClient {
          * @private
          */
     protected async handleError(response: Response): Promise<void> {
-        const error = await response.json();
-        const message = error.error;
         switch (response.status) {
             case BAD_REQUEST_ERROR:
-                throw new BadRequestError(message);
+                throw new BadRequestError();
             case FORBIDDEN_ERROR:
-                throw new ForbiddenError(message);
+                throw new ForbiddenError();
             case NOT_FOUND_ERROR:
-                throw new NotFoundError(message);
+                throw new NotFoundError();
             case UNAUTHORISED_ERROR: {
-                throw new UnauthorizedError(message);
+                throw new UnauthorizedError();
+            }
+            case TOO_MANY_REQUESTS_ERROR: {
+                throw new TooManyRequestsError();
             }
             case INTERNAL_ERROR:
             default:
-                throw new InternalError(message);
+                throw new InternalError();
         }
     }
 };

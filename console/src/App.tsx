@@ -1,4 +1,4 @@
-import { Chart, ArcElement } from "chart.js";
+import { Chart, ArcElement, Tooltip } from "chart.js";
 import { useEffect } from "react";
 
 import { Header } from "@/app/components/common/Header";
@@ -11,9 +11,8 @@ import "./App.scss";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-
     useEffect(() => {
-        Chart.register(ArcElement);
+        Chart.register(ArcElement, Tooltip);
     }, []);
 
     return (

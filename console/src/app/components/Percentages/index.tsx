@@ -9,10 +9,10 @@ type PercentagesProps = {
 };
 
 export function Percentages({ percentages }: PercentagesProps) {
-    const labels = Object.keys(percentages);
-    const values = Object.values(percentages);
+    const labels = Object.keys(percentages).map(label => label.toUpperCase());
+    const values = Object.values(percentages).map(value => Math.round(value * 100) / 100);
 
-    const PERCENTAGES_CONFIG = {
+    const DOUGHNUT_CONFIG = {
         labels,
         datasets: [
             {
@@ -33,12 +33,24 @@ export function Percentages({ percentages }: PercentagesProps) {
         ]
     };
 
+    const DOUGHNUT_OPTIONS = {
+        plugins:
+        {
+            tooltip: {
+                displayColors: false,
+                callbacks: {
+                    label: (item: any) => `${item.formattedValue}%`
+                }
+            }
+        }
+    };
+
     return (
         <div className="percentages">
             <h3 className="percentages__title">
                 Market Cap Dominance
             </h3>
-            <Doughnut data={PERCENTAGES_CONFIG} />
+            <Doughnut data={DOUGHNUT_CONFIG} options={DOUGHNUT_OPTIONS} />
         </div>
     );
 };

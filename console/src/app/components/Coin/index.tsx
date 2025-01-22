@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 import { CoinInfo } from "@/types";
 
 import "./index.scss";
@@ -21,14 +23,15 @@ export function Coin({ coin }: CoinProps) {
         }
     } = coin;
 
+    const decsriptionContent = { __html: DOMPurify.sanitize(description) };
+
     return (
         <div className="coin">
             <span className="coin__title">
                 {name} #{rank}
             </span>
-            <span className="coin__description">
-                {description}
-            </span>
+            <div className="coin__description" dangerouslySetInnerHTML={decsriptionContent}>
+            </div>
             <div className="coin__market">
                 <span className="coin__market__title">Market Stats</span>
                 <div className="coin__market__item">
@@ -56,6 +59,6 @@ export function Coin({ coin }: CoinProps) {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };

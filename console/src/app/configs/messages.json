@@ -12,5 +12,12 @@
     },
     "walletAddress": {
         "copied": "Wallet address successfully copied!"
+    },
+    "coingecko": {
+        "erros": {
+            "tooManyRequests": "Too many requests error reached. API is free, please try again in few moments!",
+            "couldNotGetCoinInfo": "Could not get coin info. Please, try again later!",
+            "couldNotGetMarketCapInfo": "Could not get market cap info. Please, try again later!"
+        }
     }
 }

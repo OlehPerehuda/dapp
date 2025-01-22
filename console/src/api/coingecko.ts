@@ -4,7 +4,7 @@ import { CoinInfo, MarketCapPercentages } from "@/types";
 export class CoingeckoClient extends APIClient {
     private readonly PATH: string = import.meta.env.VITE_COINGECKO_API_URL;
 
-    public async coinInfo(id: string = 'solana'): Promise<CoinInfo> {
+    public async coinInfo(id: string): Promise<CoinInfo> {
         const path = `${this.PATH}/coins/${id}`;
         const response = await this.http.get(path, '', import.meta.env.VITE_COINGECKO_KEY);
 
