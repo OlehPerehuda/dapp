@@ -7,7 +7,7 @@ import Root from "@/app/views/Root";
 
 import { AppContext } from "@/app/context/app";
 
-import "./App.scss";
+import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
