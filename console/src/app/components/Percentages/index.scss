@@ -1,0 +1,15 @@
+.percentages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    margin: auto;
+    max-width: 600px;
+
+    &__title {
+        color: var(--white-100);
+        font-size: 2rem;
+    }
+}

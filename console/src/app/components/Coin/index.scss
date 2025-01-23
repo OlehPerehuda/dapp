@@ -1,0 +1,31 @@
+.coin {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    font-family: "Gabarito", sans-serif;
+    color: var(--white-100);
+
+    &__title {
+        font-size: 2rem;
+    }
+
+    &__description {
+        font-size: 1rem;
+
+        a {
+            font-style: italic;
+            color: #690a4c;
+        }
+    }
+
+    &__market {
+        gap: 0.5rem;
+
+        &__item {
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+    }
+}
